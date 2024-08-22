@@ -16,17 +16,13 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-        if(Auth::check()){
-
-            return redirect('/login');
+        if (Auth::check()) {
+            $userRoles = explode('|', $role);
+            if (in_array(Auth::user()->role, $userRoles)) {
+                return $next($request);
+            }
         }
 
-        $user = Auth::user();
-
-        if($user = !$role){
-            return redirect('/');
-        }
-
-        return $next($request);
+        return redirect()->route('home')->with('error', 'Access denied');
     }
 }
