@@ -10,9 +10,12 @@
     <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+     <!-- jQuery CDN -->
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     {{-- CUSTOM CSS --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/global.css') }}">
-    <title>Investorbhai</title>
+    @yield('title')
 </head>
 
 <body class="flex flex-col min-h-screen">
@@ -21,16 +24,10 @@
         <div class="container mx-auto" style="margin-top: 5rem; padding: 1rem 2rem 1rem;">
             <div class="grid grid-cols-12 gap-4">
                 <!-- Left side (9 columns) -->
+
                 <div class="col-span-9">
-                    <!-- Content for the left side -->
-                    <h3 class='page-header border-bottom pb-2 mb-3 border-b'>Recently asked questions
-                    </h3>
-                    <div class="my-3 text-center">
+                    @yield('content')
 
-                    </div>
-
-                    {{-- IF NOT FOUND QUESTION --}}
-                    @include('user.components.NoFoundAnswer')
                 </div>
 
                 <!-- Right side (3 columns) -->
@@ -59,6 +56,7 @@
 
     </main>
     @include('user.layouts.footer')
+
 </body>
 
 </html>

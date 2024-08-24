@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\EditorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
@@ -9,6 +10,20 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [UserController::class, 'index'])->name('home');
+
+
+    Route::prefix('calculator')->group(function() {
+        Route::get('/simple-interest', [CalculatorController::class, 'simpleInterest'])->name('simple.calculator');
+        Route::get('/compound-interest', [CalculatorController::class, 'compoundInterest'])->name('compound.calculator');
+        Route::get('/loan-calculator', [CalculatorController::class, 'loanCalculator'])->name('loan.calculator');
+        Route::get('/sip', [CalculatorController::class, 'sipCalculator'])->name('sip.calculator');
+        Route::get('/ppf', [CalculatorController::class, 'ppfCalculator'])->name('ppf.calculator');
+        Route::get('/recurring', [CalculatorController::class, 'rdCalculator'])->name('rd.calculator');
+    });
+
+
+
+
 
 
 Route::get('login/{provider}', [SocialAuthController::class, 'redirectToProvider']);
