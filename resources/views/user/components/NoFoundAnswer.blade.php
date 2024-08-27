@@ -11,7 +11,7 @@
         </div>
         <!-- Button Section -->
         <div class="w-3/12 flex justify-end items-center">
-            <a href="/user/questions/create" class="bg-blue-600 text-white text-lg py-2 px-4 rounded-lg">
+            <a href="{{ route('create.question') }}" class="bg-blue-600 text-white text-lg py-2 px-4 rounded-lg">
                 Ask a question
             </a>
         </div>

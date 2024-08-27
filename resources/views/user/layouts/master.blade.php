@@ -10,8 +10,8 @@
     <!-- FontAwesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-     <!-- jQuery CDN -->
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     {{-- CUSTOM CSS --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/global.css') }}">
@@ -46,7 +46,30 @@
                     </section>
                     <section class='my-3 tags'>
                         <h3 class='page-header border-bottom pb-2 mb-3'>Tags</h3>
+                        @php
+                            use App\Models\Post;
 
+                            // Fetch all posts
+                            $posts = Post::all();
+
+                            $tags = $posts
+                                ->flatMap(function ($post) {
+                                    return json_decode($post->tags, true);
+                                })
+                                ->unique()
+                                ->toArray();
+                        @endphp
+                        @if (isset($tags) && is_array($tags) && count($tags) > 0)
+                            <div class="flex flex-wrap gap-2">
+                                @foreach ($tags as $tag)
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                                        {{ $tag }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        @else
+                            <p>No tags available.</p>
+                        @endif
                     </section>
                     {{-- CALCULATOR --}}
                     @include('user.components.calculator')
