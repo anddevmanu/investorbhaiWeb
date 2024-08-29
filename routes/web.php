@@ -15,6 +15,9 @@ Route::get('/blog', [UserController::class, 'blog'])->name('blog');
 Route::get('/cpntact', [UserController::class, 'blog'])->name('contact');
 Route::get('/search', [UserController::class, 'blog'])->name('search');
 
+// POST
+Route::get('/posts/load-more', [UserController::class, 'loadMorePosts'])->name('posts.loadMore');
+
 
 Route::prefix('calculator')->group(function () {
     Route::get('/simple-interest', [CalculatorController::class, 'simpleInterest'])->name('simple.calculator');

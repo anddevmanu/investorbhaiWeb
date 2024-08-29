@@ -32,18 +32,7 @@
 
                 <!-- Right side (3 columns) -->
                 <div class="col-span-3 ">
-                    <section class='mb-3 most-popular-questions'>
-                        <h3 class='page-header border-bottom pb-2 mb-3 border-b pb-2 mb-3'>Most popular questions</h3>
-                        <ul class='list-group list-group-flush'>
-
-                            <li key=""
-                                class='list-group-item d-flex justify-content-between align-items-center'>
-                                <Link href="" class='text-decoration-none'>Share</Link>
-                                <span class='badge bg-primary rounded-pill'>kk</span>
-                            </li>
-
-                        </ul>
-                    </section>
+                    @include('user.components.mostPopularQuestion')
                     <section class='my-3 tags'>
                         <h3 class='page-header border-bottom pb-2 mb-3'>Tags</h3>
                         @php

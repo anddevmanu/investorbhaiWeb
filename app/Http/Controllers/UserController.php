@@ -13,7 +13,20 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('user.pages.home');
+        $posts = \App\Models\Post::paginate(2);
+
+        return view('user.pages.home', compact('posts'));
+    }
+
+    public function loadMorePosts(Request $request)
+    {
+        $page = $request->get('page', 1);
+        $postsPerPage = 2;
+
+        $posts = Post::orderBy('created_at', 'desc')
+            ->paginate($postsPerPage, ['*'], 'page', $page);
+
+        return response()->json($posts);
     }
 
     public function createQuestion()
