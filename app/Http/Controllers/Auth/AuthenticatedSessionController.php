@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -24,11 +25,37 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        // Attempt to authenticate the user
+        if (!Auth::attempt($credentials, $request->filled('remember'))) {
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        }
+
+
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $user =  $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+
+        switch ($user->role) {
+            case 'admin':
+                return redirect()->route('admin.dashboard');
+                break;
+            case 'editor':
+                return redirect()->route('home');
+            default:
+                return redirect()->route('home');
+                break;
+        }
+
+
     }
 
     /**

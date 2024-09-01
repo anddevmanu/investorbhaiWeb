@@ -13,14 +13,14 @@
             @forelse($posts as $post)
                 <div class="bg-white shadow-md rounded-lg mb-4">
                     <div class="px-4 py-2 bg-gray-100 border-b">
-                        <p class="text-lg font-semibold m-0">
+                        <p class="text-lg font-semibold m-0 mx-2">
                             <a href="{{ url('/questions/' . $post->slug) }}" class="text-blue-600 hover:underline">
                                 {{ $post->title }}
                             </a>
                         </p>
                         @if (auth()->check() && (auth()->user()->role == 'editor' || auth()->user()->role == 'admin'))
                             <a href="{{ url('/user/questions/edit/' . $post->id) }}"
-                                class="text-white bg-green-600 hover:bg-green-500 px-2 py-1 rounded-md float-right">
+                                class="text-white bg-green-600 hover:bg-green-500 px-2 ml-3 mt-4 rounded-md float-right">
                                 <i class="fa fa-edit"></i>
                             </a>
                         @endif
@@ -105,7 +105,7 @@
                                 posts += '</p>';
                                 posts += '@if (auth()->check() && (auth()->user()->role == 'editor' || auth()->user()->role == 'admin'))';
                                 posts += '<a href="/user/questions/edit/' + post.id +
-                                    '" class="text-white bg-green-600 hover:bg-green-500 px-2 py-1 rounded-md float-right"><i class="fa fa-edit"></i></a>';
+                                    '" class="text-white bg-green-600 hover:bg-green-500 px-2 ml-3 mt-4 rounded-md float-right"><i class="fa fa-edit"></i></a>';
                                 posts +=
                                     '@endif';
                                 posts += '</div>';

@@ -50,8 +50,20 @@ Route::middleware(['role:editor'])->group(function () {
 });
 
 Route::middleware(['role:admin'])->group(function () {
-    Route::prefix('user')->group(function () {
-        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/user/list', [AdminController::class, 'userList'])->name('user.list');
+        Route::get('/users/edit/{id}', [AdminController::class, 'userEdit'])->name('users.edit');
+        Route::post('/users/{user}', [AdminController::class, 'userupdate'])->name('users.update');
+        Route::delete('/user/delete/{user}', [AdminController::class, 'userDelete'])->name('users.delete');
+
+        // QUESTION
+        Route::get('/questions/list', [AdminController::class, 'questionList'])->name('admin.question.list');
+        Route::get('/questions/create', [AdminController::class, 'questionCreate'])->name('question.create');
+        Route::post('/questions/store', [AdminController::class, 'questionStore'])->name('admin.questions.store');
+        Route::get('/questions/edit/{post}', [AdminController::class, 'questionEdit'])->name('admin.questions.edit');
+        Route::put('/questions/update/{post}', [AdminController::class, 'questionUpdate'])->name('admin.questions.update');
+        Route::delete('/questions/delete/{post}', [AdminController::class, 'questionDelete'])->name('admin.questions.delete');
     });
 });
 
