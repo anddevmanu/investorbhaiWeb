@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\EditorController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
@@ -15,6 +16,9 @@ Route::get('/about', [UserController::class, 'about'])->name('about');
 Route::get('/blog', [UserController::class, 'blog'])->name('blog');
 Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 Route::get('/search', [UserController::class, 'blog'])->name('search');
+
+// SINGLE POST
+Route::get('/questions/{slug}', [PostController::class, 'show'])->name('questions.show');
 
 // POST
 Route::get('/posts/load-more', [UserController::class, 'loadMorePosts'])->name('posts.loadMore');

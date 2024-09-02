@@ -16,7 +16,8 @@
                 <div class="bg-white shadow-md rounded-lg mb-4">
                     <div class="px-4 py-2 bg-gray-100 border-b">
                         <p class="text-lg font-semibold m-0 mx-2">
-                            <a href="{{ url('/questions/' . $post->slug) }}" class="text-blue-600 hover:underline">
+                            <a href="{{ route('questions.show', ['slug' => $post->slug]) }}"
+                                class="text-blue-600 hover:underline">
                                 {{ $post->title }}
                             </a>
                         </p>

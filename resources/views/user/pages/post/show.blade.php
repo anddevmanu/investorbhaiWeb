@@ -1,4 +1,4 @@
-@extends('user.layouts.master') <!-- Adjust based on your layout -->
+@extends('user.layouts.master')
 
 @section('title')
     <title>{{ $post->title }} - InvestorBhai</title>
@@ -13,7 +13,8 @@
             <div class="post-header bg-gray-100 p-4 border-b">
                 <h1 class="text-2xl font-bold">{{ $post->title }}</h1>
                 <div class="post-meta mt-2">
-                    <span class="text-gray-600">Posted on {{ \Carbon\Carbon::parse($post->created_at)->format('F j, Y') }}</span>
+                    <span class="text-gray-600">Posted on
+                        {{ \Carbon\Carbon::parse($post->created_at)->format('F j, Y') }}</span>
                 </div>
             </div>
 
@@ -43,7 +44,8 @@
                         <div class="flex justify-between items-center">
                             <div class="answer-meta">
                                 <span class="font-bold">{{ $answer->user->name }}</span>
-                                <span class="text-gray-600">Answered on {{ \Carbon\Carbon::parse($answer->created_at)->format('F j, Y') }}</span>
+                                <span class="text-gray-600">Answered on
+                                    {{ \Carbon\Carbon::parse($answer->created_at)->format('F j, Y') }}</span>
                             </div>
                             <div class="answer-votes flex items-center">
                                 <!-- Voting buttons for answers -->
@@ -73,11 +75,31 @@
                 </div>
             @endforeach
         </div>
+
+        <!-- Add Answer Form -->
+        <div class="add-answer mt-6 bg-white shadow-md rounded-lg p-4">
+            <h3 class="text-xl font-semibold mb-4">Add Your Answer</h3>
+            <form action="" method="POST">
+                @csrf
+                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                <div class="mb-4">
+
+                    <textarea id="content" name="content" rows="4" placeholder="Your Answer"
+                        class="form-textarea mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                        required>
+                </textarea>
+
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                        Submit Answer
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 @endsection
 
 @section('right-sidebar')
-    @include('components.mostPopularQuestions')
-    @include('components.tags')
-    @include('components.calculator')
+    @include('user.components.mostPopularQuestion')
 @endsection
