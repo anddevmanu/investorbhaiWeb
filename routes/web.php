@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\EditorController;
+use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
@@ -12,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [UserController::class, 'index'])->name('home');
 Route::get('/about', [UserController::class, 'about'])->name('about');
 Route::get('/blog', [UserController::class, 'blog'])->name('blog');
-Route::get('/cpntact', [UserController::class, 'blog'])->name('contact');
+Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 Route::get('/search', [UserController::class, 'blog'])->name('search');
 
 // POST
 Route::get('/posts/load-more', [UserController::class, 'loadMorePosts'])->name('posts.loadMore');
+Route::post('/enquiry/save', [EnquiryController::class, 'enquirySave'])->name('contact.submit');
 
 
 Route::prefix('calculator')->group(function () {

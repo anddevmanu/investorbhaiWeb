@@ -10,6 +10,7 @@
             <li><a href="/" class="nav-link hover:text-blue-500 {{ request()->is('/') ? 'text-blue-500' : '' }}">Home</a></li>
             <li><a href="/about" class="nav-link hover:text-blue-500 {{ request()->is('about') ? 'text-blue-500' : '' }}">About</a></li>
             <li><a href="/contact" class="nav-link hover:text-blue-500 {{ request()->is('contact') ? 'text-blue-500' : '' }}">Contact</a></li>
+            <li><a href="/blog" class="nav-link hover:text-blue-500 {{ request()->is('blog') ? 'text-blue-500' : '' }}">Blog</a></li>
         </ul>
 
         <!-- Right Section: Search Bar and Auth Links -->

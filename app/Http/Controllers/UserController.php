@@ -11,9 +11,13 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
         $posts = \App\Models\Post::paginate(2);
+
+        if ($request->ajax()) {
+            return response()->json($posts);
+        }
 
         return view('user.pages.home', compact('posts'));
     }
@@ -56,4 +60,15 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Question posted successfully.');
     }
+
+
+    public function about(){
+        return view('user.pages.about');
+    }
+
+    public function contact(){
+        return view('user.pages.contact');
+    }
+
+
 }
