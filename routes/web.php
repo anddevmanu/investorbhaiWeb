@@ -9,6 +9,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [UserController::class, 'index'])->name('home');
@@ -23,6 +25,10 @@ Route::get('/questions/{slug}', [PostController::class, 'show'])->name('question
 // POST
 Route::get('/posts/load-more', [UserController::class, 'loadMorePosts'])->name('posts.loadMore');
 Route::post('/enquiry/save', [EnquiryController::class, 'enquirySave'])->name('contact.submit');
+
+// ANSWER
+Route::post('/user/answer/save', [AnswerController::class, 'saveAnswer'])->name('answer.save')->middleware('auth');
+Route::post('/user/comment/save', [CommentController::class, 'saveComment'])->name('comment.save')->middleware('auth');
 
 
 Route::prefix('calculator')->group(function () {

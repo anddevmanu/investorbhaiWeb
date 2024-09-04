@@ -15,10 +15,6 @@ class Comment extends Model
         'user_id', 'post_id', 'answer_id', 'blog_id', 'type', 'body', 'status'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function post()
     {
@@ -28,6 +24,11 @@ class Comment extends Model
     public function answer()
     {
         return $this->belongsTo(Answer::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function blog()

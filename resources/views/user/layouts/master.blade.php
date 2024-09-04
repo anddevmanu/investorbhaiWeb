@@ -15,7 +15,12 @@
 
     {{-- CUSTOM CSS --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/global.css') }}">
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
     @yield('title')
+
+   
 </head>
 
 <body class="flex flex-col min-h-screen">
@@ -25,6 +30,7 @@
             <div class="grid grid-cols-12 gap-4">
                 <!-- Left side (dynamic columns) -->
                 <div class="@yield('left-col-span', 'col-span-9')">
+                    
                     @yield('content')
                 </div>
 
@@ -37,7 +43,10 @@
             </div>
         </div>
     </main>
+
+    
     @include('user.layouts.footer')
+    
 </body>
 
 </html>

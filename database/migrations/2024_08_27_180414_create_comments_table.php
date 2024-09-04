@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('tbl_comments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->nullable();
-            $table->foreignId('post_id')->constrained('tbl_posts')->nullable();
-            $table->foreignId('answer_id')->constrained('tbl_answers')->nullable();
-            $table->foreignId('blog_id')->constrained('tbl_blogs')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignId('post_id')->nullable()->constrained('tbl_posts');
+            $table->foreignId('answer_id')->nullable()->constrained('tbl_answers');
+            $table->foreignId('blog_id')->nullable()->constrained('tbl_blogs');
             $table->string('type'); // Type of comment (post, answer, blog)
             $table->longText('body'); // Comment body
             $table->tinyInteger('status')->default(1); // Status of the comment
