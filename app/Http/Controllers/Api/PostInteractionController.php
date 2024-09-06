@@ -4,52 +4,66 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\DB;
+
+
 
 
 class PostInteractionController extends Controller
 {
     public function increaseView($id)
     {
-        // Redis key for views
-        $key = "post:{$id}:views";
 
-        // Increment the view count
-        $newViewCount = Redis::incr($key);
+            // Increment the view count directly in tbl_posts
+        DB::table('tbl_posts')
+        ->where('id', $id)
+        ->increment('views');
 
-        return response()->json([
-            'success' => true,
-            'views' => $newViewCount,
-        ]);
+            $updatedViewCount = DB::table('tbl_posts')
+                ->where('id', $id)
+                ->value('views');
+
+                return response()->json([
+        'success' => true,
+                'views' => $updatedViewCount,
+            ]);
     }
 
     public function like($id)
     {
-        // Redis key for likes
-        $key = "post:{$id}:likes";
+        DB::table('tbl_posts')
+            ->where('id', $id)
+            ->increment('likes');
 
-        // Increment the like count
-        $newLikeCount = Redis::incr($key);
+        // Fetch the updated like count
+        $updatedLikeCount = DB::table('tbl_posts')
+            ->where('id', $id)
+            ->value('likes');
 
         return response()->json([
             'success' => true,
-            'likes' => $newLikeCount,
+            'likes' => $updatedLikeCount,
         ]);
     }
 
     public function dislike($id)
     {
-        // Redis key for dislikes
-        $key = "post:{$id}:dislikes";
+        // Increment the dislike count directly in tbl_posts
+        DB::table('tbl_posts')
+            ->where('id', $id)
+            ->increment('dislikes');
 
-        // Increment the dislike count
-        $newDislikeCount = Redis::incr($key);
+        // Fetch the updated dislike count
+        $updatedDislikeCount = DB::table('tbl_posts')
+            ->where('id', $id)
+            ->value('dislikes');
 
         return response()->json([
             'success' => true,
-            'dislikes' => $newDislikeCount,
+            'dislikes' => $updatedDislikeCount,
         ]);
     }
+
 
 
     public function getPostInteractions($id)

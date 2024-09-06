@@ -156,8 +156,8 @@
 
             // LIKES
             $('#likeBtn').on('click', function(event) {
-                event.preventDefault(); // Prevent default behavior
-                console.log("Likes");
+                event.preventDefault();
+
 
                 $.ajax({
                     url: `/posts/{{ $post->id }}/like`,
@@ -172,6 +172,25 @@
                     }
                 });
             });
+
+            // DISLIKES
+            $('#dislikeBtn').on('click', function(event) {
+                event.preventDefault();
+                console.log("Dislikes")
+
+                $.ajax({
+                    url: `/post/{{$post->id}}/dislike`,
+                    type: 'POST',
+                    data: {
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function(response) {
+                        if(response.success){
+                            $('#dislikeCount').text(response.dislikes);
+                        }
+                    }
+                })
+            })
         });
     </script>
 @endsection

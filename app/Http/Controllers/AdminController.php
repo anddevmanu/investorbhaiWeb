@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
@@ -149,4 +150,25 @@ class AdminController extends Controller
 
         return redirect()->route('admin.question.list')->with('success', 'Question deleted successfully.');
     }
+
+
+    public function enquiryList(){
+
+        $enquiries = Contact::orderBy('id', 'DESC')->paginate(10);
+
+        return view('admin.pages.enquiryList', compact('enquiries'));
+    }
+
+    public function deleteEnquiry(Request $request, $id){
+
+             $enquiry = Contact::find($id);
+
+            if (!$enquiry) {
+                return redirect()->back()->withErrors('Selected enquiry is not available')->withInput();
+            }
+
+            $enquiry->delete();
+
+                return redirect()->back()->with('success', 'Enquiry Deleted Successfully !');
+            }
 }

@@ -38,6 +38,12 @@
             <span>Create Question</span></a>
     </li>
 
+    <li class="nav-item ">
+        <a href="{{ route('enquiry.list') }}" class="nav-link" href="">
+            <i class="fas fa-fw fa-question"></i>
+            <span>Enquiries</span></a>
+    </li>
+
     {{-- <li class="nav-item ">
         <a class="nav-link" href="">
             <i class="fas fa-fw fa-file-import li"></i>

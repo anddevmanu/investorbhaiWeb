@@ -13,7 +13,8 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $posts = \App\Models\Post::paginate(2);
+
+        $posts = \App\Models\Post::where('status', 1)->paginate(10);
 
         if ($request->ajax()) {
             return response()->json($posts);

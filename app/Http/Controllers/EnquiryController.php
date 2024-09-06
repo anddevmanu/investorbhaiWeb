@@ -16,6 +16,7 @@ class EnquiryController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255',
             'phone' => 'nullable|string|max:20',
+            'message' => 'required'
         ]);
 
         // Save the enquiry
@@ -25,6 +26,7 @@ class EnquiryController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone' => $request->phone,
+            'message' => $request->message
         ]);
 
 

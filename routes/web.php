@@ -80,6 +80,16 @@ Route::middleware(['role:admin'])->group(function () {
         Route::get('/questions/edit/{post}', [AdminController::class, 'questionEdit'])->name('admin.questions.edit');
         Route::put('/questions/update/{post}', [AdminController::class, 'questionUpdate'])->name('admin.questions.update');
         Route::delete('/questions/delete/{post}', [AdminController::class, 'questionDelete'])->name('admin.questions.delete');
+
+        // ENQUIRIES
+        Route::get('/enuiries/list', [AdminController::class, 'enquiryList'] )->name('enquiry.list');
+
+
+         // Route to delete an enquiry
+        Route::delete('/enuiries/delete/{id}', [AdminController::class, 'deleteEnquiry'])->name('enquiries.delete');
+
+         // Optional: Route to view a specific enquiry
+        Route::get('/enuiries/show/{id}', [AdminController::class, 'showEnquiry'])->name('enquiries.show');
     });
 });
 
