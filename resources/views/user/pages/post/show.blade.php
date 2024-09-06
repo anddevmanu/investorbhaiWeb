@@ -8,14 +8,15 @@
 
 @section('content')
     <div class="main_content_wrapper">
-    @include('admin.layouts.message')
+        @include('admin.layouts.message')
 
         <!-- Main Post -->
         <div class="post bg-white shadow-md rounded-lg mb-6">
             <div class="post-header bg-gray-100 p-4 border-b">
                 <h1 class="text-2xl font-bold">{{ $post->title }}</h1>
                 <div class="post-meta mt-2">
-                    <span class="text-gray-600">Posted on {{ \Carbon\Carbon::parse($post->created_at)->format('F j, Y') }}</span>
+                    <span class="text-gray-600">Posted on
+                        {{ \Carbon\Carbon::parse($post->created_at)->format('F j, Y') }}</span>
                 </div>
             </div>
 
@@ -26,27 +27,32 @@
             <div class="post-actions flex justify-between items-center p-4 border-t">
                 <div class="post-votes flex items-center">
                     <!-- Voting buttons -->
-                    <button class="text-blue-600 hover:text-blue-800">
-                        <i class="fa fa-thumbs-up"></i> {{ $post->likes }}
+                    <button id="likeBtn" class="text-blue-600 hover:text-blue-800">
+                        <i class="fa fa-thumbs-up"></i> <span id="likeCount">{{ $post->likes }}</span>
+                    </button>
+                    <button id="dislikeBtn" class="text-red-600 hover:text-red-800 ml-4">
+                        <i class="fa fa-thumbs-down"></i> <span id="dislikeCount">{{ $post->dislikes }}</span>
                     </button>
                     <button class="text-red-600 hover:text-red-800 ml-4">
-                        <i class="fa fa-thumbs-down"></i> {{ $post->dislikes }}
+                        <i class="fa fa-eye mr-1"></i> <span id="viewCount">{{ $post->views }}</span>
                     </button>
                 </div>
             </div>
+
         </div>
 
         <!-- Answers -->
         <div class="answers mt-6">
             <h2 class="text-xl font-semibold mb-4">Answers</h2>
-           
+
             @foreach ($post->answers as $answer)
                 <div class="answer bg-white shadow-md rounded-lg mb-4">
                     <div class="answer-header bg-gray-100 p-4 border-b">
                         <div class="flex justify-between items-center">
                             <div class="answer-meta">
                                 <span class="font-bold">{{ $answer->user->name ?? 'Unknown' }}</span>
-                                <span class="text-gray-600">Answered on {{ \Carbon\Carbon::parse($answer->created_at)->format('F j, Y') }}</span>
+                                <span class="text-gray-600">Answered on
+                                    {{ \Carbon\Carbon::parse($answer->created_at)->format('F j, Y') }}</span>
                             </div>
                             <div class="answer-votes flex items-center">
                                 <!-- Voting buttons for answers -->
@@ -57,7 +63,8 @@
                                     <i class="fa fa-thumbs-down"></i> {{ $answer->dislikes }}
                                 </button>
                                 <!-- Comment button -->
-                                <button class="text-gray-600 hover:text-gray-800 ml-4 commentBtn" data-answer-id="{{ $answer->id }}">
+                                <button class="text-gray-600 hover:text-gray-800 ml-4 commentBtn"
+                                    data-answer-id="{{ $answer->id }}">
                                     <i class="fa fa-comment"></i> Comment
                                 </button>
                             </div>
@@ -65,8 +72,8 @@
                     </div>
 
                     <div class="answer-body p-4">
-    {!! $answer->body !!}
-</div>
+                        {!! $answer->body !!}
+                    </div>
 
 
                     <!-- Comments Section -->
@@ -89,7 +96,8 @@
                                     <textarea name="body" class="w-full p-2 border rounded-lg" rows="3" placeholder="Add your comment"></textarea>
                                 </div>
                                 <div class="flex justify-end">
-                                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                                    <button type="submit"
+                                        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                                         Submit Comment
                                     </button>
                                 </div>
@@ -118,15 +126,54 @@
         </div>
     </div>
 
+    <!-- Ensure jQuery is included -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         $(document).ready(function() {
-                $('.commentBtn').on('click', function() {
-                    var answerId = $(this).data('answer-id');
-                    $('#comment-form-' + answerId).toggleClass('hidden');
-                });
+            const postId = {{ $post->id }};
+
+            console.log("PostId", postId);
+
+            $('.commentBtn').on('click', function() {
+                var answerId = $(this).data('answer-id');
+                $('#comment-form-' + answerId).toggleClass('hidden');
             });
 
-        </script>
+            //  VIEW COUNT INCREASE
+            $.ajax({
+                url: `/posts/${postId}/view`,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $('#viewCount').text(`Views: ${response.views}`);
+                    }
+                }
+            });
+
+            // LIKES
+            $('#likeBtn').on('click', function(event) {
+                event.preventDefault(); // Prevent default behavior
+                console.log("Likes");
+
+                $.ajax({
+                    url: `/posts/{{ $post->id }}/like`,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#likeCount').text(response.likes);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
 
 @section('right-sidebar')

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('post_id')->nullable()->constrained('tbl_posts');
             $table->foreignId('answer_id')->nullable()->constrained('tbl_answers');
             $table->foreignId('blog_id')->nullable()->constrained('tbl_blogs');
-            $table->string('type'); // Type of comment (post, answer, blog)
-            $table->longText('body'); // Comment body
-            $table->tinyInteger('status')->default(1); // Status of the comment
+            $table->string('type')->comment('post', 'answer', 'blog');
+            $table->longText('body');
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

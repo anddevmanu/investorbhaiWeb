@@ -13,8 +13,7 @@ class PostController extends Controller
         $post = Post::where('slug', $slug)->with('answers.user', 'answers.comments')->firstOrFail();
 
         // return $post;
-        
-
         return view('user.pages.post.show', compact('post'));
     }
+
 }

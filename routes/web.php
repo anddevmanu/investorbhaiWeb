@@ -10,7 +10,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialAuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\Api\PostInteractionController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ViewController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [UserController::class, 'index'])->name('home');
@@ -21,9 +23,11 @@ Route::get('/search', [UserController::class, 'blog'])->name('search');
 
 // SINGLE POST
 Route::get('/questions/{slug}', [PostController::class, 'show'])->name('questions.show');
+Route::post('/post/{id}/view', [PostInteractionController::class, 'increaseView']);
+Route::post('/post/{id}/like', [PostInteractionController::class, 'like']);
+Route::post('/post/{id}/dislike', [PostInteractionController::class, 'dislike']);
 
-// POST
-Route::get('/posts/load-more', [UserController::class, 'loadMorePosts'])->name('posts.loadMore');
+
 Route::post('/enquiry/save', [EnquiryController::class, 'enquirySave'])->name('contact.submit');
 
 // ANSWER
@@ -86,3 +90,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+// api routes
+require __DIR__ . '/api.php';

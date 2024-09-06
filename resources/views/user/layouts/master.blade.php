@@ -13,6 +13,7 @@
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
     {{-- CUSTOM CSS --}}
     <link rel="stylesheet" href="{{ asset('frontend/css/global.css') }}">
 
@@ -20,7 +21,7 @@
 
     @yield('title')
 
-   
+
 </head>
 
 <body class="flex flex-col min-h-screen">
@@ -30,7 +31,7 @@
             <div class="grid grid-cols-12 gap-4">
                 <!-- Left side (dynamic columns) -->
                 <div class="@yield('left-col-span', 'col-span-9')">
-                    
+
                     @yield('content')
                 </div>
 
@@ -44,9 +45,9 @@
         </div>
     </main>
 
-    
+
     @include('user.layouts.footer')
-    
+
 </body>
 
 </html>
