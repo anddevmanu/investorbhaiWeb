@@ -10,7 +10,15 @@
             <li><a href="/" class="nav-link hover:text-blue-500 {{ request()->is('/') ? 'text-blue-500' : '' }}">Home</a></li>
             <li><a href="/about" class="nav-link hover:text-blue-500 {{ request()->is('about') ? 'text-blue-500' : '' }}">About</a></li>
             <li><a href="/contact" class="nav-link hover:text-blue-500 {{ request()->is('contact') ? 'text-blue-500' : '' }}">Contact</a></li>
-            <li><a href="/blog" class="nav-link hover:text-blue-500 {{ request()->is('blog') ? 'text-blue-500' : '' }}">Blog</a></li>
+            <li><a href="{{route('blogs')}}" class="nav-link hover:text-blue-500 {{ request()->is('blog') ? 'text-blue-500' : '' }}">Blog</a></li>
+
+            @auth
+                @if(auth()->user()->role === 'editor')
+                    <!-- Editor Specific Links -->
+                    <li><a href="/editor/dashboard" class="nav-link hover:text-blue-500 {{ request()->is('editor/dashboard') ? 'text-blue-500' : '' }}">Editor Dashboard</a></li>
+                    <li><a href="/editor/manage" class="nav-link hover:text-blue-500 {{ request()->is('editor/manage') ? 'text-blue-500' : '' }}">Manage Content</a></li>
+                @endif
+            @endauth
         </ul>
 
         <!-- Right Section: Search Bar and Auth Links -->
@@ -31,35 +39,44 @@
 
             <!-- Auth Links -->
             @auth
-                @if (auth()->user()->role === 'user')
-                    <!-- User Profile Image and Dropdown -->
-                    <div class="relative">
-                        <button id="profile-menu-button" class="flex items-center space-x-2 text-gray-800">
-                            <img
-                                src="{{ auth()->user()->profile_img ? auth()->user()->profile_img : asset('frontend/img/default-profile.png') }}"
-                                class="rounded-full w-10 h-10"
-                                alt="{{ auth()->user()->name }}"
-                            />
-                            <span>{{ auth()->user()->name }}</span>
-                        </button>
-                        <!-- Dropdown Menu -->
-                        <div id="profile-menu" class="absolute right-0 mt-2 bg-white border rounded shadow-lg hidden">
+                <div class="relative">
+                    <button id="profile-menu-button" class="flex items-center space-x-2 text-gray-800">
+                        <img
+                            src="{{ auth()->user()->profile_img ? auth()->user()->profile_img : asset('frontend/img/default-profile.png') }}"
+                            class="rounded-full w-10 h-10"
+                            alt="{{ auth()->user()->name }}"
+                        />
+                        <span>{{ auth()->user()->name }}</span>
+                    </button>
+                    <!-- Dropdown Menu -->
+                    <div id="profile-menu" class="absolute right-0 mt-2 w-44 bg-white border rounded shadow-lg hidden">
+                        @if(auth()->user()->role === 'user')
                             <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/profile') ? 'bg-gray-100' : '' }}">Profile</a>
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/settings') ? 'bg-gray-100' : '' }}">Settings</a>
-                            <div class="border-t"></div>
-                            <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/settings') ? 'bg-gray-100' : '' }}">Change Password</a>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/questions') ? 'bg-gray-100' : '' }}">My Questions</a>
+                        @elseif(auth()->user()->role === 'editor')
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/profile') ? 'bg-gray-100' : '' }}">Profile</a>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/change-password') ? 'bg-gray-100' : '' }}">Change Password</a>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/questions') ? 'bg-gray-100' : '' }}">My Questions</a>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/blogs') ? 'bg-gray-100' : '' }}">Blogs</a>
+                        @elseif(auth()->user()->role === 'admin')
+                            <a href="{{route('admin.dashboard')}}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('admin/dashboard') ? 'bg-gray-100' : '' }}">Dashboard</a>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('admin/profile') ? 'bg-gray-100' : '' }}">Profile</a>
+                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('admin/change-password') ? 'bg-gray-100' : '' }}">Change Password</a>
+                        @endif
+                        <div class="border-t"></div>
+                        <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
-                    <script>
-                        document.getElementById('profile-menu-button').addEventListener('click', function() {
-                            var menu = document.getElementById('profile-menu');
-                            menu.classList.toggle('hidden');
-                        });
-                    </script>
-                @endif
+                </div>
+                <script>
+                    document.getElementById('profile-menu-button').addEventListener('click', function() {
+                        var menu = document.getElementById('profile-menu');
+                        menu.classList.toggle('hidden');
+                    });
+                </script>
             @endauth
 
             @guest

@@ -22,7 +22,7 @@
                             </a>
                         </p>
                         @if (auth()->check() && (auth()->user()->role == 'editor' || auth()->user()->role == 'admin'))
-                            <a href="{{ url('/user/questions/edit/' . $post->id) }}"
+                            <a href="{{ route('edit.post', $post->id) }}"
                                 class="text-white bg-green-600 hover:bg-green-500 px-2 ml-3 mt-4 rounded-md float-right">
                                 <i class="fa fa-edit"></i>
                             </a>
@@ -132,7 +132,7 @@
                                         <a href="/questions/${post.slug}" class="text-blue-600 hover:underline">${post.title}</a>
                                     </p>
                                     @if (auth()->check() && (auth()->user()->role == 'editor' || auth()->user()->role == 'admin'))
-                                        <a href="/user/questions/edit/${post.id}" class="text-white bg-green-600 hover:bg-green-500 px-2 ml-3 mt-4 rounded-md float-right">
+                                        <a href="/questions/${post.id}/edit" class="text-white bg-green-600 hover:bg-green-500 px-2 ml-3 mt-4 rounded-md float-right">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     @endif

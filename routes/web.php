@@ -13,6 +13,7 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Api\PostInteractionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ViewController;
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [UserController::class, 'index'])->name('home');
@@ -26,6 +27,9 @@ Route::get('/questions/{slug}', [PostController::class, 'show'])->name('question
 Route::post('/post/{id}/view', [PostInteractionController::class, 'increaseView']);
 Route::post('/post/{id}/like', [PostInteractionController::class, 'like']);
 Route::post('/post/{id}/dislike', [PostInteractionController::class, 'dislike']);
+
+// BLOG
+Route::get('/blogs', [BlogController::class, 'blogList'])->name('blogs');
 
 
 Route::post('/enquiry/save', [EnquiryController::class, 'enquirySave'])->name('contact.submit');
@@ -84,7 +88,6 @@ Route::middleware(['role:admin'])->group(function () {
         // ENQUIRIES
         Route::get('/enuiries/list', [AdminController::class, 'enquiryList'] )->name('enquiry.list');
 
-
          // Route to delete an enquiry
         Route::delete('/enuiries/delete/{id}', [AdminController::class, 'deleteEnquiry'])->name('enquiries.delete');
 
@@ -92,6 +95,16 @@ Route::middleware(['role:admin'])->group(function () {
         Route::get('/enuiries/show/{id}', [AdminController::class, 'showEnquiry'])->name('enquiries.show');
     });
 });
+
+// Apply middleware to ensure the user is authenticated and has the role of editor or admin
+Route::middleware(['auth', 'role:editor,admin'])->group(function () {
+
+    Route::prefix('questions')->group(function () {
+        Route::get('{id}/edit', [PostController::class, 'editPost'])->name('edit.post');
+        Route::put('/update/{post}', [PostController::class, 'updatePost'])->name('update.post');
+    });
+});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

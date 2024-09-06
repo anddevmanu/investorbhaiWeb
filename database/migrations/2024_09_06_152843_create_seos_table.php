@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_blogs', function (Blueprint $table) {
+        Schema::create('tbl_seo_dtl', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('tbl_categories')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->text('title');
-            $table->text('slug');
-            $table->longText('description')->nullable();
-            $table->longText('image')->nullable();
+            $table->foreignId('blog_id')->constrained('tbl_blogs')->onDelete('cascade');
+            $table->string('meta_title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keywords')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_blogs');
+        Schema::dropIfExists('tbl_seo_dtl');
     }
 };

@@ -25,4 +25,8 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function seo(){
+        return $this->hasOne(Seo::class);
+    }
 }
