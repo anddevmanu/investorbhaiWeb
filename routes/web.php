@@ -116,8 +116,12 @@ Route::middleware(['auth', 'role:editor|admin'])->group(function () {
     });
     // blog
     Route::prefix('blogs')->group(function () {
-        Route::get('/create', [BlogController::class, 'createBlog'])->name('create.blog');
-        Route::post('/admin/blog/store', [BlogController::class, 'store'])->name('admin.blog.store');
+        Route::get('/list', [BlogController::class, 'blogList'])->name('blog.list');
+        Route::get('/create', [BlogController::class, 'createBlog'])->name('blog.create');
+        Route::post('/admin/blog/store', [BlogController::class, 'storeBlog'])->name('blog.store');
+        Route::get('{id}/edit', [BlogController::class, 'editBlog'])->name('blog.edit');
+        Route::put('{id}/update', [BlogController::class, 'updateBlog'])->name('blog.update');
+        Route::delete('{id}/delete', [BlogController::class, 'deleteBlog'])->name('blog.delete');
 
     });
 });
