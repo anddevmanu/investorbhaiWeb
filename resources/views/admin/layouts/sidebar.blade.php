@@ -38,6 +38,27 @@
             <span>Create Question</span></a>
     </li>
 
+     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Category</span>
+        </a>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{route('category.list')}}">Category List</a>
+                <a class="collapse-item" href="{{route('category.create')}}">Category Create</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('create.blog') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Blogs</span>
+        </a>
+    </li>
+
     <li class="nav-item ">
         <a href="{{ route('enquiry.list') }}" class="nav-link" href="">
             <i class="fas fa-fw fa-question"></i>

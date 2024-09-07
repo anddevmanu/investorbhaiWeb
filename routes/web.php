@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\PostInteractionController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ViewController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [UserController::class, 'index'])->name('home');
@@ -96,12 +97,28 @@ Route::middleware(['role:admin'])->group(function () {
     });
 });
 
-// Apply middleware to ensure the user is authenticated and has the role of editor or admin
-Route::middleware(['auth', 'role:editor,admin'])->group(function () {
+
+Route::middleware(['auth', 'role:editor|admin'])->group(function () {
 
     Route::prefix('questions')->group(function () {
         Route::get('{id}/edit', [PostController::class, 'editPost'])->name('edit.post');
         Route::put('/update/{post}', [PostController::class, 'updatePost'])->name('update.post');
+    });
+
+    // CATEGORY
+    Route::prefix('category')->group(function() {
+        Route::get('list', [CategoryController::class, 'list'])->name('category.list');
+        Route::get('create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('create', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::put('{id}/update', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('{id}/delete', [CategoryController::class, 'delete'])->name('category.delete');
+    });
+    // blog
+    Route::prefix('blogs')->group(function () {
+        Route::get('/create', [BlogController::class, 'createBlog'])->name('create.blog');
+        Route::post('/admin/blog/store', [BlogController::class, 'store'])->name('admin.blog.store');
+
     });
 });
 
