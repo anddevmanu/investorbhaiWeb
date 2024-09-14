@@ -1,0 +1,12 @@
+@media (min-width: 1200px) {
+    .h3, h3 {
+        font-size: 1.75rem;
+    }
+}
+
+
+.page-header{
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
