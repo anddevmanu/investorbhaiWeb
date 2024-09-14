@@ -39,7 +39,7 @@
                         Update Profile
                     </a>
 
-                    <a class="dropdown-item" href="#" data-target="#modal-change-password" data-toggle="modal">
+                    <a class="dropdown-item" href="{{ route('change.password') }}" data-target="#modal-change-password" data-toggle="modal">
                         <i class="fas fa-eye fa-sm fa-fw mr-2 text-gray-400"></i>
                         Change Password
                     </a>
@@ -72,8 +72,9 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form class="" action="" method="POST">
+            <form class="" action="{{ route('update.password') }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="modal-body">
                     @if (session('error') && session('modal'))
                         <div class="auto-close-msg alert alert-danger" role="alert">

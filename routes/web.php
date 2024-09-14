@@ -124,8 +124,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('profile')->group(function (){
         Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::delete('/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
+
+    Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change.password');
+    Route::put('/update/password', [ProfileController::class, 'updatePassword'])->name('update.password');
 });
 
 require __DIR__ . '/auth.php';

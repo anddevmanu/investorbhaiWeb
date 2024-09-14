@@ -6,7 +6,9 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -18,17 +20,17 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if(!$user){
+        if (!$user) {
             return redirect()->back()->with('info', 'Login to access this page !');
-        }elseif($user->status !== 1){
+        } elseif ($user->status !== 1) {
             return redirect()->back()->with('warning', 'Your account is inactive Contact support to activate !');
         }
 
-        if($user->role === 'admin'){
+        if ($user->role === 'admin') {
             return view('admin.pages.profile.profile', compact('user'));
-        }elseif($user->role === 'editor'){
+        } elseif ($user->role === 'editor') {
             return view('editor.pages.profile.profile', compact('user'));
-        }else{
+        } else {
             return view('user.pages.profile.profile', compact('user'));
         }
     }
@@ -66,8 +68,7 @@ class ProfileController extends Controller
             $user->profile_img = 'uploads/user/' . $imageName;
         }
 
-
-         $user->save();
+        $user->save();
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
@@ -92,5 +93,50 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function changePassword(){
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->back()->with('info', 'Login to access this page !');
+        } elseif ($user->status !== 1) {
+            return redirect()->back()->with('warning', 'Your account is inactive Contact support to activate !');
+        }
+
+        if($user->role === 'admin'){
+            return view('admin.pages.profile.change-password');
+        }elseif($user->role === 'editor'){
+            return view('editor.pages.profile.change-password');
+        }else{
+            return view('user.pages.profile.change-password');
+        }
+    }
+
+    public function updatePassword(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'current_password' => ['required', 'current_password'],
+            'new_password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+
+        $user = Auth::user();
+
+
+        if (!Hash::check($request->input('current_password'), $user->password)) {
+            return Redirect::back()->withErrors(['current_password' => 'Current password is incorrect'])->withInput();
+        }
+
+        // Update the password
+        $user->password = Hash::make($request->input('new_password'));
+        $user->save();
+
+        // Redirect with success message
+        return Redirect::back()->with('success', 'Password changed successfully');
     }
 }

@@ -45,18 +45,18 @@
                     <div id="profile-menu" class="absolute right-0 mt-2 w-44 bg-white border rounded shadow-lg hidden">
                         @if(auth()->user()->role === 'user')
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/profile') ? 'bg-gray-100' : '' }}">Profile</a>
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/settings') ? 'bg-gray-100' : '' }}">Change Password</a>
+                            <a href="{{ route('change.password') }}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/settings') ? 'bg-gray-100' : '' }}">Change Password</a>
                             <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('user/questions') ? 'bg-gray-100' : '' }}">My Questions</a>
                         @elseif(auth()->user()->role === 'editor')
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/profile') ? 'bg-gray-100' : '' }}">Profile</a>
                             <a href="{{ route('editor.dashboard') }}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/dashboard') ? 'bg-gray-100' : '' }}">Dashboard</a>
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/change-password') ? 'bg-gray-100' : '' }}">Change Password</a>
+                            <a href="{{ route('change.password') }}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/change-password') ? 'bg-gray-100' : '' }}">Change Password</a>
                             <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/questions') ? 'bg-gray-100' : '' }}">My Questions</a>
                             <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('editor/blogs') ? 'bg-gray-100' : '' }}">Blogs</a>
                         @elseif(auth()->user()->role === 'admin')
                             <a href="{{route('admin.dashboard')}}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('admin/dashboard') ? 'bg-gray-100' : '' }}">Dashboard</a>
                             <a href="{{ route('profile.edit') }}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('admin/profile') ? 'bg-gray-100' : '' }}">Profile</a>
-                            <a href="" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('admin/change-password') ? 'bg-gray-100' : '' }}">Change Password</a>
+                            <a href="{{ route('change.password') }}" class="block px-4 py-2 hover:bg-gray-100 {{ request()->is('admin/change-password') ? 'bg-gray-100' : '' }}">Change Password</a>
                         @endif
                         <div class="border-t"></div>
                         <a href="{{ route('logout') }}" class="block px-4 py-2 hover:bg-gray-100" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>

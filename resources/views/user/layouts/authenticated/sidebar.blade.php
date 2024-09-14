@@ -36,7 +36,7 @@
 
         <!-- Change Password -->
         <li>
-            <a href="" class="flex items-center text-white hover:bg-gray-700 p-2 rounded-md">
+            <a href="{{ route('change.password') }}" class="flex items-center text-white hover:bg-gray-700 p-2 rounded-md">
                 <i class="fa fa-lock pr-2" aria-hidden="true"></i> Change Password
             </a>
         </li>

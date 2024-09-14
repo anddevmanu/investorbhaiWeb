@@ -100,13 +100,9 @@
         </li>
 
         <!-- Other Menu Items -->
+
         <li>
-            <a href="" class="flex items-center text-white hover:bg-gray-700 p-2 rounded-md">
-                <i class="fa fa-cogs pr-2" aria-hidden="true"></i> Settings
-            </a>
-        </li>
-        <li>
-            <a href="" class="flex items-center text-white hover:bg-gray-700 p-2 rounded-md">
+            <a href="{{ route('profile.edit') }}" class="flex items-center text-white hover:bg-gray-700 p-2 rounded-md">
                 <i class="fa fa-user pr-2" aria-hidden="true"></i> Profile
             </a>
         </li>
