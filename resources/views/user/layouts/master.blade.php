@@ -31,7 +31,7 @@
             <div class="grid grid-cols-12 gap-4">
                 <!-- Left side (dynamic columns) -->
                 <div class="@yield('left-col-span', 'col-span-9')">
-
+                    <x-adsense ad-client="ca-pub-xxxxxxxxxxxxxxxx" ad-slot="1234567890" ad-format="rectangle" ad-style="bg-gray-100" ad-responsive="true" />
                     @yield('content')
                 </div>
 
@@ -39,6 +39,7 @@
                 @hasSection('right-sidebar')
                     <div class="col-span-3">
                         @yield('right-sidebar')
+                        <x-adsense ad-client="ca-pub-xxxxxxxxxxxxxxxx" ad-slot="1234567890" ad-format="rectangle" ad-style="bg-gray-100" ad-responsive="true" />
                     </div>
                 @endif
             </div>

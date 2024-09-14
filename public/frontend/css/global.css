@@ -10,3 +10,13 @@
     font-weight: 500;
     line-height: 1.2;
 }
+
+
+.ad-container {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.ad-container .adsbygoogle {
+    display: inline-block;
+}
