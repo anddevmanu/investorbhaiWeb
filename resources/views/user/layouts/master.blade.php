@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/global.css') }}">
 
     <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    {{-- GOOGLE AUTO ADSENSE --}}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9390772892463957"
+     crossorigin="anonymous"></script>
 
     @yield('title')
 
@@ -31,7 +34,7 @@
             <div class="grid grid-cols-12 gap-4">
                 <!-- Left side (dynamic columns) -->
                 <div class="@yield('left-col-span', 'col-span-9')">
-                    <x-adsense ad-client="ca-pub-xxxxxxxxxxxxxxxx" ad-slot="1234567890" ad-format="rectangle" ad-style="bg-gray-100" ad-responsive="true" />
+                    <x-adsense ad-client="ca-pub-9390772892463957" ad-slot="8054387556" ad-format="rectangle" ad-style="bg-gray-100 display:block" ad-responsive="true" />
                     @yield('content')
                 </div>
 
