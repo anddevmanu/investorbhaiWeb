@@ -127,6 +127,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
+    // ROUTE FOR QUESTIONS LIST
+    Route::prefix('questions')->group(function (){
+        Route::get('/user/list/{userId?}', [PostController::class, 'list'])->name('question.list');
+    });
+
     Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('change.password');
     Route::put('/update/password', [ProfileController::class, 'updatePassword'])->name('update.password');
 });

@@ -14,12 +14,21 @@ class PostController extends Controller
     public function list($userId = null)
     {
 
+
         $user = Auth::user();
+
+        // return $user;
+
+        if(!$user){
+            return redirect()->back()->with('message', 'You are not authorised to access this page !');
+        }elseif($user->status !== 1){
+            return redirect()->back()->with('error', 'Your account is deactivated please contact to support!');
+        }
 
         if ($user->role === 'editor') {
             if ($userId) {
                 $questions = Post::where('user_id', $userId)->orderBy('id', 'DESC')->paginate(10);
-                // return $questions;
+
             } else {
                 $questions = Post::orderBy('id', 'DESC')->paginate(10);
             }
@@ -29,6 +38,9 @@ class PostController extends Controller
             $questions = Post::orderBy('id', 'DESC')->paginate(10);
 
             return view('admin.pages.question.list', ['questions' => $questions]);
+        }elseif($user->role === 'user'){
+            $questions = Post::orderBy('id', 'DESC')->paginate(10);
+            return view('user.pages.questions.list', ['questions' => $questions]);
         }
 
         return redirect()->back()->with('message', 'You are authorised to access this');

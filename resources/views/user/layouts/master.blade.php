@@ -23,6 +23,9 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9390772892463957"
      crossorigin="anonymous"></script>
 
+     {{-- Toastr CSS --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     @yield('title')
 
 </head>
@@ -51,6 +54,39 @@
 
 
     @include('user.layouts.footer')
+
+            {{-- Toastr JS --}}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    @if(Session::has('success'))
+                        toastr.success("{{ Session::get('success') }}");
+                    @endif
+
+                    @if(Session::has('error'))
+                        toastr.error("{{ Session::get('error') }}");
+                    @endif
+
+                    @if(Session::has('info'))
+                        toastr.info("{{ Session::get('info') }}");
+                    @endif
+
+                    @if(Session::has('warning'))
+                        toastr.warning("{{ Session::get('warning') }}");
+                    @endif
+                });
+            </script>
+
+            <script>
+                toastr.options = {
+                    "closeButton": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000"
+                };
+            </script>
 
 </body>
 
