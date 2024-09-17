@@ -100,7 +100,7 @@
                         <i class="fa fa-home mr-3"></i>Noida
                     </p>
                     <p class="flex items-center">
-                        <i class="fa fa-envelope mr-3"></i>investorgyani@gmail.com
+                      <a href="mailto:investorgyani@gmail.com "> <i class="fa fa-envelope mr-3"></i>investorgyani@gmail.com </a>
                     </p>
                     <!-- Uncomment if needed
                     <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>

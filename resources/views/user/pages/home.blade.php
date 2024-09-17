@@ -4,7 +4,7 @@
     <title>Investorbhai - Home</title>
 @endsection
 
-@section('left-col-span', 'col-span-9')
+@section('left-col-span', 'col-span-12 md:col-span-9')
 
 @section('content')
     <div class="main_content_wrapper">

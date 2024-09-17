@@ -29,12 +29,12 @@
     <main class="my-5 pt-5 container min-vh-100 flex-grow">
         <div class="container mx-auto" style="margin-top: 5rem; padding: 1rem 2rem 1rem;">
             <div class="grid grid-cols-12 gap-4">
-                <div class="@yield('left-col-span', 'col-span-9')">
+                <div class="@yield('left-col-span', 'col-span-12 md:col-span-9')">
                     @yield('content')
                 </div>
 
                 @hasSection('right-sidebar')
-                <div class="col-span-3">
+                <div class="hidden md:block col-span-3">
                     @yield('right-sidebar')
                 </div>
                 @endif
