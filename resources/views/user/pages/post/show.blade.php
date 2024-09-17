@@ -90,6 +90,7 @@
                         <div class="add-comment mt-4 mb-2 hidden" id="comment-form-{{ $answer->id }}">
                             <form action="{{ route('comment.save') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="type" value="answer" />
                                 <input type="hidden" name="answer_id" value="{{ $answer->id }}">
                                 <input type="hidden" name="post_id" value="{{ $post->id }}">
                                 <div class="mb-4">
@@ -113,7 +114,9 @@
             <h3 class="text-xl font-semibold mb-4">Add Your Answer</h3>
             <form action="{{ route('answer.save') }}" method="POST">
                 @csrf
+
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
+
                 <div class="mb-4">
                     <x-ckeditor id="editor1" name="body" value="{{ old('editor', $initialValue ?? '') }}" />
                 </div>

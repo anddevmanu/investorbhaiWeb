@@ -82,7 +82,9 @@ class UserController extends Controller
             ->get();
 
         // Extract tags from the blog
-        $tags = array_map('trim', explode(',', $blog->tags));
+        $allTags = Blog::pluck('tags')->map(function ($tags) {
+            return explode(',', $tags);
+        })->flatten()->unique()->map('trim');
 
         // Fetch related blogs based on category (excluding the current blog)
         $relatedBlogs = Blog::where('category_id', $blog->category_id)
@@ -96,7 +98,7 @@ class UserController extends Controller
         return view('user.blog-details', [
             'blog' => $blog,
             'popularBlogs' => $popularBlogs,
-            'tags' => $tags,
+            'allTags' => $allTags,
             'relatedBlogs' => $relatedBlogs,
             'comments' => $comments,
         ]);

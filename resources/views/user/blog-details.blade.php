@@ -17,49 +17,51 @@
     <meta name="twitter:image" content="{{ asset($blog->image) }}">
 @endsection
 
-@section('left-col-span', 'col-span-9')
+@section('left-col-span', 'col-span-12 md:col-span-9')
 
 @section('content')
-    <div class="main_content_wrapper px-16">
+    <div class="main_content_wrapper px-4 md:px-8 lg:px-16">
         <!-- Blog Details Section -->
         <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
             <!-- Blog Image -->
-            <img class="w-full h-80 object-cover object-center" src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
+            <img class="w-full h-48 md:h-80 object-cover object-center" src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
 
             <!-- Blog Title and Meta Info -->
-            <div class="p-6">
-                <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $blog->title }}</h1>
-                <div class="text-gray-600 mb-6">
+            <div class="p-4 md:p-6">
+                <h1 class="text-2xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4">{{ $blog->title }}</h1>
+                <div class="text-gray-600 mb-4 md:mb-6">
                     <span>By <span class="font-medium">{{ $blog->user->name }}</span></span>
                     <span> on {{ $blog->created_at->format('M d, Y') }}</span>
                 </div>
 
                 <!-- Blog Content -->
-                <div class="text-gray-700 mb-6">
+                <div class="text-gray-700 mb-4 md:mb-6">
                     {!! $blog->description !!}
                 </div>
 
                 <!-- Blog Tags -->
-                <div class="mb-6">
+                <div class="mb-4 md:mb-6">
                     @php
                         $tags = explode(',', $blog->tags);
                     @endphp
                     @foreach ($tags as $tag)
-                        <span class="inline-block bg-gray-200 text-xs text-gray-700 rounded-full px-3 py-1 mr-2">{{ trim($tag) }}</span>
+                        <span class="inline-block bg-gray-200 text-xs text-gray-700 rounded-full px-3 py-1 mr-2 mb-2">{{ trim($tag) }}</span>
                     @endforeach
                 </div>
             </div>
         </div>
 
         <!-- Comments Section -->
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Comments</h2>
+        <div class="bg-white shadow-lg rounded-lg p-4 md:p-6 mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Comments</h2>
 
             <!-- Add Comment Form -->
-            <form action="#" method="POST">
+            <form action="{{route('comment.save')}}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <textarea name="comment" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="Add your comment..."></textarea>
+                    <input type="hidden" name="type" value="blog"/>
+                    <input type="hidden" name="blog_id" value="{{$blog->id}}" />
+                    <textarea name="body" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md" placeholder="Add your comment..."></textarea>
                 </div>
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">Submit</button>
             </form>
@@ -69,25 +71,25 @@
                 <div class="mt-4 bg-gray-50 p-4 rounded-md shadow-sm">
                     <div class="font-medium text-gray-800">{{ $comment->user->name }}</div>
                     <div class="text-gray-600">{{ $comment->created_at->format('M d, Y') }}</div>
-                    <p class="mt-2">{{ $comment->content }}</p>
+                    <p class="mt-2">{{ $comment->body }}</p>
                 </div>
             @endforeach
         </div>
 
         <!-- Related Blogs -->
-        <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Related Blogs</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="bg-white shadow-lg rounded-lg p-4 md:p-6 mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">Related Blogs</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                 @foreach ($relatedBlogs as $related)
                     <div class="bg-white shadow-md rounded-lg overflow-hidden">
                         <a href="{{ route('blog.details', $related->slug) }}">
-                            <img class="w-full h-48 object-cover object-center" src="{{ asset($related->image) }}" alt="{{ $related->title }}">
+                            <img class="w-full h-32 md:h-48 object-cover object-center" src="{{ asset($related->image) }}" alt="{{ $related->title }}">
                         </a>
                         <div class="p-4">
-                            <h3 class="text-lg font-semibold text-gray-800 mb-2">
+                            <h3 class="text-sm md:text-lg font-semibold text-gray-800 mb-1">
                                 <a href="{{ route('blog.details', $related->slug) }}">{{ Str::limit($related->title, 60) }}</a>
                             </h3>
-                            <p class="text-gray-600 text-sm">{{ $related->created_at->format('M d, Y') }}</p>
+                            <p class="text-gray-600 text-xs md:text-sm">{{ $related->created_at->format('M d, Y') }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -98,29 +100,29 @@
 
 @section('right-sidebar')
     <!-- Popular Blogs -->
-    <div class="bg-white shadow-lg rounded-lg p-6 mb-8">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Popular Blogs</h2>
+    <div class="bg-white shadow-lg rounded-lg p-4 md:p-6 mb-8">
+        <h2 class="text-lg md:text-xl font-bold text-gray-800 mb-4">Popular Blogs</h2>
         <ul>
             @foreach ($popularBlogs as $popular)
                 <li class="mb-4">
                     <a href="{{ route('blog.details', $popular->slug) }}" class="text-blue-500 hover:underline">
                         {{ Str::limit($popular->title, 50) }}
                     </a>
-                    <p class="text-gray-600 text-sm">{{ $popular->created_at->format('M d, Y') }}</p>
+                    <p class="text-gray-600 text-xs md:text-sm">{{ $popular->created_at->format('M d, Y') }}</p>
                 </li>
             @endforeach
         </ul>
     </div>
 
     <!-- Tags List -->
-    <div class="bg-white shadow-lg rounded-lg p-6">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Tags</h2>
+    <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
+        <h2 class="text-lg md:text-xl font-bold text-gray-800 mb-4">Tags</h2>
         <div class="flex flex-wrap">
-            {{-- @foreach ($allTags as $tag)
-                <a href="{{ route('blog.tag', $tag->slug) }}" class="bg-gray-200 text-xs text-gray-700 rounded-full px-3 py-1 mr-2 mb-2 inline-block hover:bg-gray-300">
-                    {{ $tag->name }}
+            @foreach ($allTags as $tag)
+                <a href="#" class="bg-gray-200 text-xs md:text-sm text-gray-700 rounded-full px-2 py-1 mr-2 mb-2 inline-block hover:bg-gray-300">
+                    {{ $tag }}
                 </a>
-            @endforeach --}}
+            @endforeach
         </div>
     </div>
 @endsection

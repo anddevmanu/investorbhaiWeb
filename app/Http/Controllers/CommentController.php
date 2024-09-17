@@ -9,31 +9,33 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth',
-        ];
-    }
 
-    public function saveComment(Request $request){
-        // return $request;
+
+    public function saveComment(Request $request)
+    {
+
+        // Validate the request based on the type of content (post, answer, or blog)
         $validatedData = $request->validate([
-            'post_id' => 'required',
-            'answer_id' => 'required',
-            'body' => 'required'    
+            'type' => 'required|in:post,answer,blog', // Ensure the type is either post, answer, or blog
+            'body' => 'required',
+            'post_id' => 'nullable|required_if:type,post|exists:tbl_posts,id',
+            'answer_id' => 'nullable|required_if:type,answer|exists:tbl_answers,id',
+            'blog_id' => 'nullable|required_if:type,blog|exists:tbl_blogs,id',
         ]);
 
         $user = Auth::user();
 
+        // Create the comment based on the type
         $comment = Comment::create([
             'user_id' => $user->id,
-            'post_id' => $validatedData['post_id'],
-            'answer_id' => $validatedData['answer_id'],
+            'post_id' => $validatedData['type'] == 'post' ? $validatedData['post_id'] : null,
+            'answer_id' => $validatedData['type'] == 'answer' ? $validatedData['answer_id'] : null,
+            'blog_id' => $validatedData['type'] == 'blog' ? $validatedData['blog_id'] : null,
             'body' => $validatedData['body'],
-            'type' => 'answer',
+            'type' => $validatedData['type'], // Set the type (post, answer, or blog)
         ]);
 
-        return redirect()->back()->with('success', 'Your Comment has been submitted successfully!');
+        return redirect()->back()->with('message', 'Your comment has been submitted successfully!');
     }
+
 }
