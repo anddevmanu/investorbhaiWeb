@@ -24,7 +24,7 @@ Route::get('login/{provider}/callback', [SocialAuthController::class, 'handlePro
 
 Route::get('/', [UserController::class, 'index'])->name('home');
 Route::get('/about', [UserController::class, 'about'])->name('about');
-Route::get('/user/blog/list', [UserController::class, 'blogListShow'])->name('blog');
+Route::get('/user/blog/list', [UserController::class, 'blogListShow'])->name('home.blog.list');
 Route::get('blog/{slug}', [UserController::class, 'blogDetails'])->name('blog.details');
 Route::get('/contact', [UserController::class, 'contact'])->name('contact');
 Route::get('/search', [UserController::class, 'blog'])->name('search');

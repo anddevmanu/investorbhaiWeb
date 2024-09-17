@@ -1,5 +1,9 @@
 @extends('admin.layouts.master')
 
+@section('title')
+    <title>Dashboard - Investorbhai</title>
+@endsection
+
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">

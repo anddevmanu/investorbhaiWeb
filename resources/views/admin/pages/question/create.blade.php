@@ -1,5 +1,9 @@
 @extends('admin.layouts.master')
 
+@section('title')
+    <title>Question Create - Investorbhai</title>
+@endsection
+
 @section('content')
     <!-- Begin Page Content -->
     <div class="container-fluid">

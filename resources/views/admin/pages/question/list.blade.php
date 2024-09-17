@@ -1,5 +1,9 @@
 @extends('admin.layouts.master')
 
+@section('title')
+    <title>Question List - Investorbhai</title>
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
