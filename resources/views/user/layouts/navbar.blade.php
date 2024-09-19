@@ -1,6 +1,6 @@
 <nav class="bg-white shadow-lg fixed w-full top-0 z-10 px-8 py-6">
     @php
-        $user = Auth::user();
+    $user = Auth::user();
     @endphp
     <div class="container mx-auto flex justify-between items-center">
         <!-- Left Section: Logo -->
@@ -14,6 +14,10 @@
             <li><a href="{{route('about')}}" class="nav-link hover:text-blue-500 {{ request()->is('about') ? 'text-blue-500' : '' }}">About</a></li>
             <li><a href="{{route('contact')}}" class="nav-link hover:text-blue-500 {{ request()->is('contact') ? 'text-blue-500' : '' }}">Contact</a></li>
             <li><a href="{{ route('home.blog.list') }}" class="nav-link hover:text-blue-500 {{ request()->is('blog') ? 'text-blue-500' : '' }}">Blog</a></li>
+
+            <li> <a href="{{ route('login') }}" class="btn bg-blue-500 text-white px-4 py-2 rounded">Sign In</a></li>
+            <li> <a href="{{ route('register') }}" class="btn bg-blue-500 text-white px-4 py-2 rounded">Sign Up</a></li>
+
         </ul>
 
         <!-- Hamburger Button for Mobile -->
@@ -92,6 +96,12 @@
             <li><a href="{{ route('admin.dashboard') }}" class="hover:text-blue-500">Admin Dashboard</a></li>
             @endif
             @endauth
+            @guest
+            <li class="my-2">
+                <a href="{{ route('login') }}" class="btn bg-blue-500 text-white px-4 py-2 rounded">Sign In</a></li>
+            <li>
+                <a href="{{ route('register') }}" class="btn bg-blue-500 text-white px-4 py-2 rounded">Sign Up</a></li>
+            @endguest
         </ul>
     </div>
 </div>
